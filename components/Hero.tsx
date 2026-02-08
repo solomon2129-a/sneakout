@@ -49,9 +49,11 @@ export const Hero = () => {
             animate="visible"
           >
             {sneakoutLetters.map((letter, i) => (
-              <motion.span key={i} variants={letterVariants} className="text-[72px] md:text-[120px] lg:text-[160px] font-black heading-font tracking-tight leading-none text-secondary">
-                {letter}
-              </motion.span>
+              <span key={i} className="text-[72px] md:text-[120px] lg:text-[160px] font-black heading-font tracking-tight leading-none text-secondary">
+                <motion.span variants={letterVariants}>
+                  {letter}
+                </motion.span>
+              </span>
             ))}
           </motion.h1>
 
@@ -65,14 +67,16 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      <motion.div className="absolute bottom-10 left-1/2 -translate-x-1/2" animate={{ y: [0, 10, 0] }} transition={{ duration: 2.5, repeat: Infinity }}>
-        <button onClick={() => document.getElementById('culture')?.scrollIntoView({ behavior: 'smooth' })} className="flex flex-col items-center text-sm text-secondary/70">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2.5, repeat: Infinity }}>
+          <button onClick={() => document.getElementById('culture')?.scrollIntoView({ behavior: 'smooth' })} className="flex flex-col items-center text-sm text-secondary/70">
           <span>Scroll</span>
           <svg className="w-6 h-6 mt-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </button>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 };
