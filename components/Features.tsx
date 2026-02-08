@@ -40,42 +40,47 @@ export const TiltCard = ({ title, description, icon, index }: TiltCardProps) => 
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
-      viewport={{ once: true }}
+    <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.02 }}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
       className="group relative p-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl hover:border-[#980B07]/50 transition-all duration-300 h-full overflow-hidden"
     >
-      {/* Enhanced glowing background on hover */}
-      <motion.div 
-        className="absolute -inset-1 bg-gradient-to-br from-[#980B07]/20 to-[#980B07]/5 rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10"
-        animate={{ scale: [0.8, 1.2, 0.8] }}
-        transition={{ duration: 4, repeat: Infinity }}
-      />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1, duration: 0.6 }}
+        viewport={{ once: true }}
+        whileHover={{ scale: 1.02 }}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Enhanced glowing background on hover */}
+        <div className="absolute -inset-1 bg-gradient-to-br from-[#980B07]/20 to-[#980B07]/5 rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 -z-10">
+          <motion.div 
+            animate={{ scale: [0.8, 1.2, 0.8] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          />
+        </div>
 
-      <div className="relative z-10">
-        <motion.div 
-          className="w-16 h-16 bg-[#980B07]/10 border border-[#980B07]/20 rounded-xl flex items-center justify-center mb-6 transform transition-all duration-300 text-2xl"
-          whileHover={{ 
-            backgroundColor: "rgba(255, 107, 53, 0.2)",
-            boxShadow: "0 0 20px rgba(255, 107, 53, 0.3)",
-          }}
-        >
-          {icon}
-        </motion.div>
-        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#980B07] transition-colors">{title}</h3>
-        <p className="text-secondary/70 group-hover:text-secondary/80 transition-colors leading-relaxed">{description}</p>
-      </div>
-    </motion.div>
+        <div className="relative z-10">
+          <div className="w-16 h-16 bg-[#980B07]/10 border border-[#980B07]/20 rounded-xl flex items-center justify-center mb-6 transform transition-all duration-300 text-2xl">
+            <motion.div 
+              whileHover={{ 
+                backgroundColor: "rgba(255, 107, 53, 0.2)",
+                boxShadow: "0 0 20px rgba(255, 107, 53, 0.3)",
+              }}
+            >
+              {icon}
+            </motion.div>
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#980B07] transition-colors">{title}</h3>
+          <p className="text-secondary/70 group-hover:text-secondary/80 transition-colors leading-relaxed">{description}</p>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
@@ -110,20 +115,21 @@ export const Features = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
-            One tool. Less chaos.<br />Better events.
-          </h2>
-          <p className="text-xl text-secondary/70 max-w-2xl mx-auto">
-            Sneakout brings order to the beautiful chaos of event organizing.
-          </p>
-        </motion.div>
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+              One tool. Less chaos.<br />Better events.
+            </h2>
+            <p className="text-xl text-secondary/70 max-w-2xl mx-auto">
+              Sneakout brings order to the beautiful chaos of event organizing.
+            </p>
+          </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (

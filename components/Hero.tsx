@@ -33,29 +33,31 @@ export const Hero = () => {
       {/* Gritty background layers */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute inset-0 bg-[url('/images/grain.png')] mix-blend-overlay opacity-40" />
-        <motion.div
-          animate={{ opacity: [0.06, 0.15, 0.06] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent"
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent">
+          <motion.div
+            animate={{ opacity: [0.06, 0.15, 0.06] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
-          <motion.h1
-            className="mb-6 flex justify-center items-baseline gap-2"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {sneakoutLetters.map((letter, i) => (
-              <span key={i} className="text-[72px] md:text-[120px] lg:text-[160px] font-black heading-font tracking-tight leading-none text-secondary">
-                <motion.span variants={letterVariants}>
-                  {letter}
-                </motion.span>
-              </span>
-            ))}
-          </motion.h1>
+          <h1 className="mb-6 flex justify-center items-baseline gap-2">
+            <motion.h1
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {sneakoutLetters.map((letter, i) => (
+                <span key={i} className="text-[72px] md:text-[120px] lg:text-[160px] font-black heading-font tracking-tight leading-none text-secondary">
+                  <motion.span variants={letterVariants}>
+                    {letter}
+                  </motion.span>
+                </span>
+              ))}
+            </motion.h1>
+          </h1>
 
           <p className="text-xl md:text-2xl font-semibold text-secondary/90">Where underground culture gets organized.</p>
           <p className="mt-3 text-sm text-secondary/70">Built for the people who actually make the scene happen.</p>

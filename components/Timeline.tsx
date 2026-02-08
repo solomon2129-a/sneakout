@@ -32,69 +32,79 @@ export const Timeline = () => {
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-24"
-        >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+        <div className="text-center mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
             Simple to start.<br />Powerful to scale.
           </h2>
           <p className="text-xl text-secondary/70">
             Three steps. Complete control.
           </p>
-        </motion.div>
+          </motion.div>
+        </div>
 
         <div className="space-y-24">
           {steps.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="flex items-start gap-12 group"
-            >
-              <div className="flex-shrink-0 relative">
-                <motion.div 
-                  className="text-9xl font-black text-[#980B07] leading-none group-hover:scale-110 transition-transform"
-                  whileHover={{ 
-                    textShadow: "0 0 30px rgba(255, 107, 53, 0.5)",
-                  }}
-                >
-                  {item.step}
-                </motion.div>
-                {/* Animated glow behind number */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-[#980B07]/20 to-transparent rounded-full blur-2xl -z-10"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
-                />
-              </div>
-              <motion.div 
-                className="flex-1 pt-8"
-                whileHover={{ x: 10 }}
-                transition={{ duration: 0.3 }}
+            <div className="flex items-start gap-12 group">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                viewport={{ once: true }}
               >
+                <div className="flex-shrink-0 relative">
+                  <div 
+                    className="text-9xl font-black text-[#980B07] leading-none group-hover:scale-110 transition-transform"
+                  >
+                    <motion.div
+                      whileHover={{ 
+                        textShadow: "0 0 30px rgba(255, 107, 53, 0.5)",
+                      }}
+                    >
+                      {item.step}
+                    </motion.div>
+                  </div>
+                  {/* Animated glow behind number */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#980B07]/20 to-transparent rounded-full blur-2xl -z-10">
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
+                    />
+                  </div>
+                </div>
+                <div 
+                   className="flex-1 pt-8"
+                >
+                  <motion.div
+                    whileHover={{ x: 10 }}
+                    transition={{ duration: 0.3 }}
+                  >
                 <h3 className="text-4xl font-bold text-white mb-4 group-hover:text-[#980B07] transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-xl text-secondary/70 leading-relaxed group-hover:text-secondary/80 transition-colors">
-                  {item.description}
-                </p>
+                  <p className="text-xl text-secondary/70 leading-relaxed group-hover:text-secondary/80 transition-colors">
+                    {item.description}
+                  </p>
+                  </motion.div>
+                </div>
               </motion.div>
 
               {/* Connecting line (except for last item) */}
               {index < steps.length - 1 && (
-                <motion.div 
-                  className="absolute left-24 top-32 w-1 h-24 bg-gradient-to-b from-[#980B07]/50 to-transparent"
-                  animate={{ scaleY: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
+                <div className="absolute left-24 top-32 w-1 h-24 bg-gradient-to-b from-[#980B07]/50 to-transparent">
+                  <motion.div 
+                    animate={{ scaleY: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </div>
               )}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

@@ -64,41 +64,44 @@ export const Stats = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
             Tested in the real world
           </h2>
-        </motion.div>
+          </motion.div>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              whileHover={{ y: -5 }}
-              transition={{ delay: index * 0.15, duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center group cursor-default"
-            >
-              <motion.div 
-                className="text-5xl md:text-6xl font-black text-[#980B07] mb-3 group-hover:scale-110 transition-transform"
-                whileHover={{ textShadow: "0 0 20px rgba(255, 107, 53, 0.5)" }}
+            <div className="text-center group cursor-default">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -5 }}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
               >
-                <AnimatedCounter
-                  end={stat.value}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                />
-              </motion.div>
+              <div className="text-5xl md:text-6xl font-black text-[#980B07] mb-3 group-hover:scale-110 transition-transform">
+                <motion.div
+                  whileHover={{ textShadow: "0 0 20px rgba(255, 107, 53, 0.5)" }}
+                >
+                  <AnimatedCounter
+                    end={stat.value}
+                    prefix={stat.prefix}
+                    suffix={stat.suffix}
+                  />
+                </motion.div>
+              </div>
               <p className="text-secondary/70 text-lg group-hover:text-secondary/80 transition-colors">{stat.label}</p>
             </motion.div>
+            </div>
           ))}
         </div>
       </div>

@@ -31,42 +31,45 @@ export const Compare = ({
   };
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
-      className={`relative overflow-hidden rounded-lg cursor-col-resize ${className}`}
       onMouseMove={handleMouseMove}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      className={`relative overflow-hidden rounded-lg cursor-col-resize ${className}`}
     >
-      <img
-        src={firstImage}
-        alt="Before"
-        className={`absolute inset-0 w-full h-full ${firstImageClassName}`}
-      />
-      
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${sliderPosition}%` }}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
       >
         <img
-          src={secondImage}
-          alt="After"
-          className={`absolute inset-0 w-full h-full ${secondImageClassname}`}
+          src={firstImage}
+          alt="Before"
+          className={`absolute inset-0 w-full h-full ${firstImageClassName}`}
         />
-      </div>
-
-      <div
-        className="absolute top-0 bottom-0 w-1 bg-[#FF7A00] cursor-col-resize"
-        style={{
-          left: `${sliderPosition}%`,
-          transform: "translateX(-50%)",
-        }}
-      >
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#FF7A00] rounded-full w-12 h-12 flex items-center justify-center text-[#1A1A1A] font-bold">
-          ↔
+        
+        <div
+          className="absolute inset-0 overflow-hidden"
+          style={{ width: `${sliderPosition}%` }}
+        >
+          <img
+            src={secondImage}
+            alt="After"
+            className={`absolute inset-0 w-full h-full ${secondImageClassname}`}
+          />
         </div>
-      </div>
-    </motion.div>
+
+        <div
+          className="absolute top-0 bottom-0 w-1 bg-[#FF7A00] cursor-col-resize"
+          style={{
+            left: `${sliderPosition}%`,
+            transform: "translateX(-50%)",
+          }}
+        >
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#FF7A00] rounded-full w-12 h-12 flex items-center justify-center text-[#1A1A1A] font-bold">
+            ↔
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 };

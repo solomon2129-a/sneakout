@@ -35,31 +35,33 @@ export const GlobeSection = () => {
   return (
     <section className="py-20 px-4 bg-[#1A1A1A] relative w-full overflow-hidden">
       <div className="max-w-7xl mx-auto w-full relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-[#F5EBDD] mb-4">
-            Underground culture is global
-          </h2>
+        <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-[#F5EBDD] mb-4">
+              Underground culture is global
+            </h2>
 
-          <p className="text-lg text-[#F5EBDD]/70 max-w-md mx-auto">
-            Sneakout helps scenes grow beyond cities.
-          </p>
-        </motion.div>
+            <p className="text-lg text-[#F5EBDD]/70 max-w-md mx-auto">
+              Sneakout helps scenes grow beyond cities.
+            </p>
+          </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden glass-card"
-        >
-          <World globeConfig={globeConfig} data={[]} />
-        </motion.div>
+        <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden glass-card">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
+            <World globeConfig={globeConfig} data={[]} />
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -25,35 +25,36 @@ export const CultureShowcase = () => {
   return (
     <section className="py-20 px-4 bg-[#1A1A1A]">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-[#F5EBDD] mb-4">
-            Built for Underground Culture
-          </h2>
-          <p className="text-lg text-[#F5EBDD]/70">
-            Drag around these snapshots of the community we serve
-          </p>
-        </motion.div>
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-[#F5EBDD] mb-4">
+              Built for Underground Culture
+            </h2>
+            <p className="text-lg text-[#F5EBDD]/70">
+              Drag around these snapshots of the community we serve
+            </p>
+          </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden glass-card"
-        >
-          <DraggableCardContainer className="relative w-full h-full">
+        <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden glass-card">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <DraggableCardContainer className="relative w-full h-full">
             {items.map((item, i) => (
               <DraggableCardBody key={`culture-${i}`} className={item.className}>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="rounded-lg overflow-hidden shadow-xl"
-                >
+                <div className="rounded-lg overflow-hidden shadow-xl">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                  >
                   <img
                     src={item.image}
                     alt={item.title}
@@ -64,11 +65,13 @@ export const CultureShowcase = () => {
                       {item.title}
                     </h3>
                   </div>
-                </motion.div>
+                  </motion.div>
+                </div>
               </DraggableCardBody>
             ))}
           </DraggableCardContainer>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

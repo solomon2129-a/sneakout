@@ -38,21 +38,23 @@ export const CardStack = ({ items }: { items: Card[] }) => {
           const offset = (index - currentIndex + cards.length) % cards.length;
 
           return (
-            <motion.div
+            <div
               key={card.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: isActive ? 1 : 0.5,
-                y: offset * 10,
-                zIndex: cards.length - offset,
-              }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
               onClick={() => handleCardClick(index)}
               className={`absolute w-full p-8 rounded-lg glass-card cursor-pointer transition-all ${
                 isActive ? "ring-2 ring-[#FF7A00]" : ""
               }`}
             >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{
+                  opacity: isActive ? 1 : 0.5,
+                  y: offset * 10,
+                  zIndex: cards.length - offset,
+                }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
               <div className="mb-4">
                 {card.content}
               </div>
@@ -60,7 +62,8 @@ export const CardStack = ({ items }: { items: Card[] }) => {
                 <p className="font-bold text-[#F5EBDD]">{card.name}</p>
                 <p className="text-sm text-[#FF7A00]">{card.designation}</p>
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           );
         })}
       </AnimatePresence>
@@ -68,14 +71,15 @@ export const CardStack = ({ items }: { items: Card[] }) => {
       {/* Click indicator dots */}
       <div className="flex justify-center gap-2 mt-96 pt-8">
         {cards.map((_, index) => (
-          <motion.button
+          <button
             key={index}
             onClick={() => handleCardClick(index)}
             className={`h-2 rounded-full transition-all ${
               index === currentIndex ? "bg-[#FF7A00] w-6" : "bg-[#F5EBDD]/30 w-2"
             }`}
-            whileHover={{ scale: 1.2 }}
-          />
+          >
+            <motion.button whileHover={{ scale: 1.2 }} />
+          </button>
         ))}
       </div>
     </div>

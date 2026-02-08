@@ -26,15 +26,16 @@ export const CultureSection = () => {
             viewport={{ once: true }}
           >
             <div className="w-full h-72 bg-gradient-to-br from-[#0B0B0B] via-[#121212] to-[#171717] rounded-lg relative overflow-hidden">
-            <div className="absolute inset-0 mix-blend-overlay opacity-40" style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(255,107,53,0.12), transparent 10%), radial-gradient(circle at 90% 80%, rgba(255,107,53,0.08), transparent 20%)' }} />
-            <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              <rect width="100%" height="100%" fill="black" />
-              <g fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="1">
-                <path d="M0 200 Q200 100 400 200 T800 200" />
-              </g>
-            </svg>
-            <div className="absolute inset-0 flex items-end p-6">
-              <div className="bg-black/40 px-3 py-2 rounded text-xs text-secondary/80">Pop-up gig — photo credit: local</div>
+              <div className="absolute inset-0 mix-blend-overlay opacity-40" style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(255,107,53,0.12), transparent 10%), radial-gradient(circle at 90% 80%, rgba(255,107,53,0.08), transparent 20%)' }} />
+              <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <rect width="100%" height="100%" fill="black" />
+                <g fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="1">
+                  <path d="M0 200 Q200 100 400 200 T800 200" />
+                </g>
+              </svg>
+              <div className="absolute inset-0 flex items-end p-6">
+                <div className="bg-black/40 px-3 py-2 rounded text-xs text-secondary/80">Pop-up gig — photo credit: local</div>
+              </div>
             </div>
           </motion.div>
         </div>

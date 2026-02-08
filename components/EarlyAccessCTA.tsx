@@ -42,74 +42,75 @@ export const EarlyAccessCTA = () => {
     >
       {/* Floating orbs background */}
       <div className="absolute inset-0 opacity-10">
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-          }}
-          className="absolute top-20 left-10 w-72 h-72 bg-[#980B07] rounded-full blur-[100px]"
-        />
-        <motion.div
-          animate={{
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            delay: 3,
-          }}
-          className="absolute bottom-20 right-10 w-72 h-72 bg-[#980B07] rounded-full blur-[100px]"
-        />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#980B07] rounded-full blur-[100px]">
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+            }}
+          />
+        </div>
+        <div className="absolute bottom-20 right-10 w-72 h-72 bg-[#980B07] rounded-full blur-[100px]">
+          <motion.div
+            animate={{
+              y: [0, 20, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              delay: 3,
+            }}
+          />
+        </div>
       </div>
 
       <div className="max-w-2xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
-            Be part of the<br />first wave
-          </h2>
-          <p className="text-xl text-secondary/70">
-            Sneakout launches in Bangalore in 3 months. Request early access and
-            help us build the tool you've always needed.
-          </p>
-        </motion.div>
+        <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+              Be part of the<br />first wave
+            </h2>
+            <p className="text-xl text-secondary/70">
+              Sneakout launches in Bangalore in 3 months. Request early access and
+              help us build the tool you've always needed.
+            </p>
+          </motion.div>
+        </div>
 
-        <motion.form
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
+        <form
           onSubmit={handleSubmit}
           className="space-y-6 p-10 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl"
         >
           {submitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-12"
-            >
+            <div className="text-center py-12">
               <motion.div
-                animate={{ scale: [0.8, 1.1, 1] }}
-                transition={{ duration: 0.6 }}
-                className="text-6xl mb-4"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
               >
-                ✓
+                <div className="text-6xl mb-4">
+                  <motion.div
+                    animate={{ scale: [0.8, 1.1, 1] }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    ✓
+                  </motion.div>
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-2">
+                  Thanks for joining
+                </h3>
+                <p className="text-secondary/70">
+                  We'll reach out as soon as early access opens.
+                </p>
               </motion.div>
-              <h3 className="text-3xl font-bold text-white mb-2">
-                Thanks for joining
-              </h3>
-              <p className="text-secondary/70">
-                We'll reach out as soon as early access opens.
-              </p>
-            </motion.div>
+            </div>
           ) : (
             <>
               <div className="grid md:grid-cols-2 gap-6">
@@ -165,26 +166,31 @@ export const EarlyAccessCTA = () => {
                 className="w-full px-6 py-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg text-white placeholder-gray-500 focus:border-[#980B07] focus:outline-none focus:ring-2 focus:ring-[#980B07]/20 transition-all resize-none"
               />
 
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05, 
-                  boxShadow: "0 0 40px rgba(255, 107, 53, 0.5)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                type="submit"
-                className="w-full py-4 bg-[#980B07] hover:bg-[#980B07]/90 text-white text-lg font-bold rounded-lg transition-all relative overflow-hidden group"
-              >
-                <span className="relative z-10">Request Early Access</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  style={{ opacity: 0.2 }}
-                />
-              </motion.button>
+              <div>
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-[#980B07] hover:bg-[#980B07]/90 text-white text-lg font-bold rounded-lg transition-all relative overflow-hidden group"
+                >
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.05,
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="relative z-10 block">Request Early Access</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent">
+                      <motion.div
+                        animate={{ x: ["-100%", "100%"] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        style={{ opacity: 0.2 }}
+                      />
+                    </div>
+                  </motion.div>
+                </button>
+              </div>
             </>
           )}
-        </motion.form>
+        </form>
       </div>
     </section>
   );
