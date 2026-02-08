@@ -20,32 +20,20 @@ export const Footer = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Founders */}
+          {/* Contact */}
           <div>
             <motion.div
               whileHover={{ y: -5 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-sm text-secondary/70 mb-3 font-semibold">Founders</p>
+              <p className="text-sm text-secondary/70 mb-3 font-semibold">Contact</p>
               <div className="space-y-2">
                 <a
-                  href="https://www.linkedin.com/in/samuel-john-paul-b14193260/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:samuel@sneakout.com"
                   className="block text-[#980B07] hover:text-[#980B07]/80 transition-colors"
                 >
                   <motion.div whileHover={{ x: 5 }}>
-                    Samuel John Paul
-                  </motion.div>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/solomonjohnpaul/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-[#980B07] hover:text-[#980B07]/80 transition-colors"
-                >
-                  <motion.div whileHover={{ x: 5 }}>
-                    Solomon John Paul
+                    samuel@sneakout.com
                   </motion.div>
                 </a>
               </div>

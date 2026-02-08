@@ -62,9 +62,15 @@ export const Hero = () => {
           <p className="text-xl md:text-2xl font-semibold text-secondary/90">Where underground culture gets organized.</p>
           <p className="mt-3 text-sm text-secondary/70">Built for the people who actually make the scene happen.</p>
 
-          <div className="mt-8 flex justify-center items-center gap-4">
-            <a href="#join" className="inline-block bg-accent text-primary px-6 py-3 rounded-md font-semibold shadow-sm">Enter the scene</a>
-            <div className="w-24 h-0.5 bg-accent/60 mt-1" />
+          <div className="mt-8 flex justify-center items-center">
+            <a href="#join" className="inline-block bg-accent text-primary px-6 py-3 rounded-md font-semibold shadow-sm">
+              <motion.div 
+                whileHover={{ scale: 1.1, boxShadow: "0 0 30px rgba(152, 11, 7, 0.6)" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Enter the scene
+              </motion.div>
+            </a>
           </div>
         </motion.div>
       </div>
