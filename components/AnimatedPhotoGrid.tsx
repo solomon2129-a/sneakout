@@ -3,8 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import type { MotionProps } from "framer-motion";
-import type { HTMLAttributes } from "react";
 
 const photos = [
   "/photos/1d1210673d4cb650dba75676a4182d32.jpg",
@@ -16,10 +14,6 @@ const photos = [
   "/photos/e50a13dac41cc3452647a5ae57b4701d.png",
   "/photos/ea0866c3d52e9c38cbd600fa1c18a2d1.jpg",
 ];
-
-type MotionDivProps = MotionProps & HTMLAttributes<HTMLDivElement>;
-
-const MotionDiv = motion.div as (props: MotionDivProps) => JSX.Element;
 
 export const AnimatedPhotoGrid = () => {
   const [pageIndex, setPageIndex] = useState(0);
@@ -42,7 +36,7 @@ export const AnimatedPhotoGrid = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-auto">
       {/* Paged carousel container */}
       <div className="absolute inset-0">
-        <MotionDiv
+        <motion.div
           className="flex w-full h-full"
           animate={{ x: `-${pageIndex * 100}%` }}
           transition={{ type: "spring", stiffness: 120, damping: 18 }}
@@ -53,7 +47,7 @@ export const AnimatedPhotoGrid = () => {
               <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-4">
                 {page.map((src, i) => (
                   <div key={i} className="relative w-full h-full rounded-lg overflow-hidden">
-                    <MotionDiv
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8, ease: "easeInOut", delay: i * 0.06 }}
@@ -61,18 +55,18 @@ export const AnimatedPhotoGrid = () => {
                     >
                       <Image src={src} alt={`bg-${pi}-${i}`} fill className="object-cover hover:scale-105 transition-transform duration-700" quality={75} />
                       <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/20 pointer-events-none" />
-                    </MotionDiv>
+                    </motion.div>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </MotionDiv>
+        </motion.div>
       </div>
 
       {/* Animated vignette effect (non interactive) */}
       <div className="absolute inset-0 pointer-events-none">
-        <MotionDiv
+        <motion.div
           animate={{ opacity: [0.12, 0.22, 0.12] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute inset-0 bg-gradient-to-r from-black/12 via-transparent to-black/12"
