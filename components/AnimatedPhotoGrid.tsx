@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import * as React from "react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+
+const MotionDiv: any = motion.div;
 
 const photos = [
   "/photos/1d1210673d4cb650dba75676a4182d32.jpg",
@@ -36,7 +39,7 @@ export const AnimatedPhotoGrid = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-auto">
       {/* Paged carousel container */}
       <div className="absolute inset-0">
-        <motion.div
+        <MotionDiv
           className="flex w-full h-full"
           animate={{ x: `-${pageIndex * 100}%` }}
           transition={{ type: "spring", stiffness: 120, damping: 18 }}
@@ -47,7 +50,7 @@ export const AnimatedPhotoGrid = () => {
               <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-4">
                 {page.map((src, i) => (
                   <div key={i} className="relative w-full h-full rounded-lg overflow-hidden">
-                    <motion.div
+                    <MotionDiv
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8, ease: "easeInOut", delay: i * 0.06 }}
@@ -61,18 +64,18 @@ export const AnimatedPhotoGrid = () => {
                         quality={75}
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/20 pointer-events-none" />
-                    </motion.div>
+                    </MotionDiv>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </motion.div>
+        </MotionDiv>
       </div>
 
       {/* Animated vignette effect (non interactive) */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div
+        <MotionDiv
           animate={{ opacity: [0.12, 0.22, 0.12] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute inset-0 bg-gradient-to-r from-black/12 via-transparent to-black/12"

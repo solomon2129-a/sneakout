@@ -135,7 +135,7 @@ const PhotoGrid = () => {
           <motion.button
             key={idx}
             onClick={() => setSelected(src)}
-            drag="xy"
+            drag={true}
             dragElastic={0.15}
             whileTap={{ scale: 0.98 }}
             className="relative aspect-square rounded-xl overflow-hidden border border-[#1A1A1A] bg-black transform-gpu hover:scale-105 transition-transform duration-300 focus:outline-none"
