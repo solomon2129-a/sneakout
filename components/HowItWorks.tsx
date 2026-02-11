@@ -36,9 +36,9 @@ export const HowItWorks = () => {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 relative">
           {/* Connecting line */}
-          <div className="hidden md:block absolute top-20 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-transparent via-[#FF7A00] to-transparent" />
+          <div className="hidden md:block absolute top-20 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-transparent via-[#980B07] to-transparent" />
 
           {steps.map((s, i) => (
             <div key={i} className="glass-card p-8 relative rounded-lg hover-lift">
@@ -48,7 +48,7 @@ export const HowItWorks = () => {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="text-5xl font-bold mb-6 text-[#FF7A00] opacity-30">{s.num}</div>
+                <div className="text-5xl font-bold mb-6 text-[#980B07] opacity-30">{s.num}</div>
                 <h3 className="text-2xl font-bold mb-4 text-[#F5EBDD]">{s.title}</h3>
                 <p className="text-[#F5EBDD]/70">{s.desc}</p>
               </motion.div>

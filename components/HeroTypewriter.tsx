@@ -7,7 +7,7 @@ export const HeroTypewriter = () => {
     { text: "Make" },
     { text: "underground" },
     { text: "culture" },
-    { text: "investable.", className: "text-[#FF7A00]" },
+    { text: "investable.", className: "text-[#980B07]" },
   ];
 
   return <TypewriterEffectSmooth words={words} />;

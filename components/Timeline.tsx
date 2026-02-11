@@ -50,7 +50,7 @@ export const Timeline = () => {
 
         <div className="space-y-24">
           {steps.map((item, index) => (
-            <div className="flex items-start gap-12 group">
+            <div className="flex flex-col items-start gap-12 group">
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -50 }}

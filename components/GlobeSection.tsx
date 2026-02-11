@@ -19,7 +19,7 @@ export const GlobeSection = () => {
     emissiveIntensity: 0.1,
     shininess: 0.9,
     polygonColor: "rgba(255,255,255,0.7)",
-    ambientLight: "#FF7A00",
+    ambientLight: "#980B07",
     directionalLeftLight: "#ffffff",
     directionalTopLight: "#ffffff",
     pointLight: "#ffffff",

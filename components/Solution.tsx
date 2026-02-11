@@ -36,7 +36,7 @@ export const Solution = () => {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
           {benefits.map((b, i) => (
             <div key={i} className="glass-card p-8 rounded-lg hover-lift">
               <motion.div
@@ -45,7 +45,7 @@ export const Solution = () => {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center justify-center w-10 h-10 rounded-full mb-6 text-sm font-bold text-[#1A1A1A] bg-gradient-to-br from-[#FF7A00] to-[#ff8c1a]">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full mb-6 text-sm font-bold text-white bg-gradient-to-br from-[#980B07] to-[#B30E0A]">
                 {i + 1}
               </div>
                 <h3 className="text-xl font-bold mb-4 text-[#F5EBDD]">{b.title}</h3>

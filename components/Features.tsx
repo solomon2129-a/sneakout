@@ -6,7 +6,7 @@ import React from "react";
 interface TiltCardProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  icon: string;
   index: number;
 }
 
@@ -66,15 +66,20 @@ export const TiltCard = ({ title, description, icon, index }: TiltCardProps) => 
         </div>
 
         <div className="relative z-10">
-          <div className="w-16 h-16 bg-[#980B07]/10 border border-[#980B07]/20 rounded-xl flex items-center justify-center mb-6 transform transition-all duration-300 text-2xl">
-            <motion.div 
-              whileHover={{ 
-                backgroundColor: "rgba(255, 107, 53, 0.2)",
-                boxShadow: "0 0 20px rgba(255, 107, 53, 0.3)",
-              }}
-            >
-              {icon}
-            </motion.div>
+          <div className="w-16 h-16 bg-[#980B07]/10 border border-[#980B07]/20 rounded-xl flex items-center justify-center mb-6 transform transition-all duration-300">
+            <div className="w-8 h-8 text-[#980B07]">
+              <motion.div 
+                whileHover={{ 
+                  backgroundColor: "rgba(152, 11, 7, 0.2)",
+                  boxShadow: "0 0 20px rgba(152, 11, 7, 0.3)",
+                }}
+                style={{ width: "100%", height: "100%" }}
+              >
+                {icon === 'clipboard' && <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/></svg>}
+                {icon === 'zap' && <svg fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>}
+                {icon === 'trophy' && <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2zm0 14H5v-8h14v8zm-6.5-9c.83 0 1.5-.67 1.5-1.5S13.33 7 12.5 7 11 7.67 11 8.5s.67 1.5 1.5 1.5z"/></svg>}
+              </motion.div>
+            </div>
           </div>
           <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#980B07] transition-colors">{title}</h3>
           <p className="text-secondary/70 group-hover:text-secondary/80 transition-colors leading-relaxed">{description}</p>
@@ -87,19 +92,19 @@ export const TiltCard = ({ title, description, icon, index }: TiltCardProps) => 
 export const Features = () => {
   const features = [
     {
-      icon: "📋",
+      icon: "clipboard",
       title: "Plan with Structure",
       description:
         "Turn ideas into action. Set timelines, track tasks, and stay organized from concept to execution.",
     },
     {
-      icon: "⚡",
+      icon: "zap",
       title: "Execute with Confidence",
       description:
         "Everything you need to run the event — confirmations, logistics, and real-time coordination.",
     },
     {
-      icon: "🏆",
+      icon: "trophy",
       title: "Build Your Reputation",
       description:
         "Every successful event builds your credibility. Show the scene you're reliable.",
@@ -131,7 +136,7 @@ export const Features = () => {
           </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
           {features.map((feature, index) => (
             <TiltCard key={index} {...feature} index={index} />
           ))}

@@ -42,7 +42,7 @@ export const CardStack = ({ items }: { items: Card[] }) => {
               key={card.id}
               onClick={() => handleCardClick(index)}
               className={`absolute w-full p-8 rounded-lg glass-card cursor-pointer transition-all ${
-                isActive ? "ring-2 ring-[#FF7A00]" : ""
+                isActive ? "ring-2 ring-[#980B07]" : ""
               }`}
             >
               <motion.div
@@ -60,7 +60,7 @@ export const CardStack = ({ items }: { items: Card[] }) => {
               </div>
               <div className="border-t border-[#2a2a2a] pt-4">
                 <p className="font-bold text-[#F5EBDD]">{card.name}</p>
-                <p className="text-sm text-[#FF7A00]">{card.designation}</p>
+                <p className="text-sm text-[#980B07]">{card.designation}</p>
               </div>
               </motion.div>
             </div>
@@ -75,7 +75,7 @@ export const CardStack = ({ items }: { items: Card[] }) => {
             key={index}
             onClick={() => handleCardClick(index)}
             className={`h-2 rounded-full transition-all ${
-              index === currentIndex ? "bg-[#FF7A00] w-6" : "bg-[#F5EBDD]/30 w-2"
+              index === currentIndex ? "bg-[#980B07] w-6" : "bg-[#F5EBDD]/30 w-2"
             }`}
           >
             <motion.button whileHover={{ scale: 1.2 }} />

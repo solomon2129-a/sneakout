@@ -37,7 +37,7 @@ export const TypewriterEffectSmooth = ({ words }: { words: Word[] }) => {
             </motion.span>
           </span>
         ))}
-        <span className="text-[#FF7A00]">
+        <span className="text-[#980B07]">
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 1] }}

@@ -77,7 +77,7 @@ export const Stats = () => {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
           {stats.map((stat, index) => (
             <div className="text-center group cursor-default">
               <motion.div

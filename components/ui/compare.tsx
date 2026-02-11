@@ -59,13 +59,13 @@ export const Compare = ({
         </div>
 
         <div
-          className="absolute top-0 bottom-0 w-1 bg-[#FF7A00] cursor-col-resize"
+          className="absolute top-0 bottom-0 w-1 bg-[#980B07] cursor-col-resize"
           style={{
             left: `${sliderPosition}%`,
             transform: "translateX(-50%)",
           }}
         >
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#FF7A00] rounded-full w-12 h-12 flex items-center justify-center text-[#1A1A1A] font-bold">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#980B07] rounded-full w-12 h-12 flex items-center justify-center text-white font-bold">
             ↔
           </div>
         </div>

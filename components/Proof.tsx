@@ -28,7 +28,7 @@ export const Proof = () => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-5xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="p-8 bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl hover:border-[#980B07]/50 transition-all group relative overflow-hidden">
               <motion.div
