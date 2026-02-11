@@ -77,16 +77,15 @@ export const CultureSection = () => {
                 </motion.div>
               </h2>
               
-              <p className="text-base md:text-lg text-secondary/80 leading-relaxed max-w-xl">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  viewport={{ once: true }}
-                >
-                  Built by people who throw shows, book artists, sell records, and keep the lights on. Sneakout is for organizers, artists, venues, and vendors who treat culture like caretaking, not a product spec.
-                </motion.div>
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                viewport={{ once: true }}
+                className="text-base md:text-lg text-secondary/80 leading-relaxed max-w-xl"
+              >
+                Built by people who throw shows, book artists, sell records, and keep the lights on. Sneakout is for organizers, artists, venues, and vendors who treat culture like caretaking, not a product spec.
+              </motion.div>
             </div>
 
             {/* Visual cards grid */}
