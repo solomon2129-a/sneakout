@@ -9,30 +9,58 @@ export const BelongingSection = () => {
     email: "",
     name: "",
     phone: "",
-    role: "",
     instagram: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   
   const words = "A new wave of organizers is building culture differently".split(" ");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Get existing submissions or create new array
-    const existing = JSON.parse(localStorage.getItem("sneakoutEarlyAccessList") || "[]");
-    existing.push({ ...form, timestamp: new Date().toISOString() });
-    localStorage.setItem("sneakoutEarlyAccessList", JSON.stringify(existing));
-    
-    setSubmitted(true);
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setForm({ email: "", name: "", phone: "", role: "", instagram: "" });
-    }, 3000);
+    setLoading(true);
+    setError("");
+
+    try {
+      // Submit to API
+      const response = await fetch("/api/submissions/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.error || "Submission failed");
+        setLoading(false);
+        return;
+      }
+
+      // Also store locally for backup
+      const existing = JSON.parse(localStorage.getItem("sneakoutEarlyAccessList") || "[]");
+      existing.push({ ...form, timestamp: new Date().toISOString() });
+      localStorage.setItem("sneakoutEarlyAccessList", JSON.stringify(existing));
+
+      setSubmitted(true);
+      setForm({ email: "", name: "", phone: "", instagram: "" });
+
+      // Reset after 5 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setError("Failed to submit. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const containerVariants = {
@@ -56,7 +84,7 @@ export const BelongingSection = () => {
   };
 
   return (
-    <section id="join" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0A0A0A] to-primary relative overflow-hidden">
+    <section id="join" className="py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0A0A0A] to-primary relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#980B07]/8 blur-3xl rounded-full" />
@@ -81,7 +109,7 @@ export const BelongingSection = () => {
             {words.map((word, i) => (
               <span 
                 key={i} 
-                className="text-secondary inline text-3xl md:text-5xl lg:text-6xl font-bold leading-relaxed heading-font"
+                className="text-secondary inline text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-relaxed heading-font"
               >
                 <motion.span
                   variants={wordVariants}
@@ -106,7 +134,7 @@ export const BelongingSection = () => {
         </div>
 
         {/* Form Card */}
-        <div className="bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F] border border-[#2A2A2A] rounded-2xl p-6 md:p-8 lg:p-12 shadow-2xl">
+        <div className="bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F] border border-[#2A2A2A] rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 shadow-2xl">
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -114,12 +142,23 @@ export const BelongingSection = () => {
             viewport={{ once: true }}
             whileHover={{ borderColor: "rgba(152, 11, 7, 0.3)" }}
           >
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+            {/* Error message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 sm:p-4 bg-red-900/20 border border-red-600/50 rounded-lg text-red-400 text-xs sm:text-sm"
+              >
+                {error}
+              </motion.div>
+            )}
+
             {submitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-12"
+                className="text-center py-8 sm:py-12"
               >
                 <div className="text-6xl mb-4">
                   <motion.div
@@ -152,7 +191,7 @@ export const BelongingSection = () => {
                     placeholder="your@email.com"
                     onFocus={() => setFocusedField('email')}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-5 py-4 bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg text-lg"
+                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg"
                     required
                   />
                   </motion.div>
@@ -176,7 +215,7 @@ export const BelongingSection = () => {
                     placeholder="Your name or artist name"
                     onFocus={() => setFocusedField('name')}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-5 py-4 bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg text-lg"
+                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg"
                     required
                   />
                   </motion.div>
@@ -200,40 +239,9 @@ export const BelongingSection = () => {
                     placeholder="Phone number (WhatsApp)"
                     onFocus={() => setFocusedField('phone')}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-5 py-4 bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg text-lg"
+                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg"
                     inputMode="tel"
-                    required
                   />
-                  </motion.div>
-                </div>
-
-                {/* Role field */}
-                <div className="relative">
-                  <motion.div
-                    animate={{
-                      boxShadow: focusedField === 'role' 
-                        ? "inset 0 0 0 1px rgba(152, 11, 7, 0.5)" 
-                        : "inset 0 0 0 1px rgba(255, 255, 255, 0.1)"
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                  <select
-                    name="role"
-                    value={form.role}
-                    onChange={handleChange}
-                    onFocus={() => setFocusedField('role')}
-                    onBlur={() => setFocusedField(null)}
-                    className="w-full px-5 py-4 bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg text-lg appearance-none cursor-pointer"
-                    required
-                  >
-                    <option value="" disabled className="bg-primary text-secondary">
-                      I am an... (organizer, artist, host, attendee)
-                    </option>
-                    <option value="organizer" className="bg-primary text-secondary">Organizer</option>
-                    <option value="artist" className="bg-primary text-secondary">Artist / DJ / Performer</option>
-                    <option value="host" className="bg-primary text-secondary">Venue / Host</option>
-                    <option value="attendee" className="bg-primary text-secondary">Attendee</option>
-                  </select>
                   </motion.div>
                 </div>
 
@@ -255,7 +263,7 @@ export const BelongingSection = () => {
                     placeholder="Instagram handle (optional)"
                     onFocus={() => setFocusedField('instagram')}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full px-5 py-4 bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg text-lg"
+                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg bg-transparent text-secondary placeholder-secondary/40 outline-none rounded-lg"
                   />
                   </motion.div>
                 </div>
@@ -263,7 +271,7 @@ export const BelongingSection = () => {
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full py-5 md:py-6 px-6 bg-gradient-to-r from-[#980B07] to-accent text-primary rounded-lg font-bold text-lg md:text-xl shadow-lg relative overflow-hidden group mt-8"
+                  className="w-full py-3 sm:py-4 md:py-5 lg:py-6 px-4 sm:px-6 text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-r from-[#980B07] to-accent text-primary rounded-lg font-bold shadow-lg relative overflow-hidden group mt-6 sm:mt-8"
                 >
                   <motion.div
                     whileHover={{

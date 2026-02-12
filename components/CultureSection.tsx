@@ -55,7 +55,7 @@ export const CultureSection = () => {
   };
 
   return (
-    <section id="culture" className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#0A0A0A]">
+    <section id="culture" className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto">
         <div className="grid gap-8 md:gap-16 lg:grid-cols-2 items-start">
           {/* Left column - Text */}

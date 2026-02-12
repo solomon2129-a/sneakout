@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const ProofSection = () => {
   const stats = [
@@ -33,7 +33,7 @@ export const ProofSection = () => {
   };
 
   return (
-    <section id="proof" className="py-28 px-6 bg-gradient-to-b from-primary to-[#0A0A0A]">
+    <section id="proof" className="py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6 bg-gradient-to-b from-primary to-[#0A0A0A]">
     <div className="max-w-7xl mx-auto">
         {/* Stats Grid */}
         <motion.div className="grid grid-cols-1 gap-12 mb-20" 
@@ -126,24 +126,102 @@ const PhotoGrid = () => {
     "/photos/ea0866c3d52e9c38cbd600fa1c18a2d1.jpg",
   ];
 
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
+  const [photosPerView, setPhotosPerView] = useState(3);
+
+  // Handle responsive layout after mount
+  useEffect(() => {
+    const handleResize = () => {
+      setPhotosPerView(window.innerWidth < 768 ? 1 : 3);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const visiblePhotos = photos.slice(currentIndex, currentIndex + photosPerView);
+  const hasMore = currentIndex + photosPerView < photos.length;
+
+  const nextPhotos = () => {
+    if (hasMore) {
+      setCurrentIndex((prev) => Math.min(prev + 1, photos.length - photosPerView));
+    }
+  };
+
+  const prevPhotos = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    }
+  };
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-        {photos.map((src, idx) => (
-          <motion.button
-            key={idx}
-            onClick={() => setSelected(src)}
-            drag={true}
-            dragElastic={0.15}
-            whileTap={{ scale: 0.98 }}
-            className="relative aspect-square rounded-xl overflow-hidden border border-[#1A1A1A] bg-black transform-gpu hover:scale-105 transition-transform duration-300 focus:outline-none"
-          >
-            <Image src={src} alt={`event-${idx}`} fill className="object-cover" quality={80} />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-          </motion.button>
-        ))}
+      <div className="relative px-2 sm:px-4">
+        {/* Photo display grid - 3 on desktop, 1 on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+          {visiblePhotos.map((src, idx) => (
+            <motion.button
+              key={currentIndex + idx}
+              onClick={() => setSelected(src)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="relative aspect-square rounded-xl overflow-hidden border border-[#1A1A1A] bg-black transform-gpu hover:scale-105 transition-transform duration-300 focus:outline-none"
+            >
+              <Image src={src} alt={`event-${currentIndex + idx}`} fill className="object-cover" quality={80} />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Arrow Navigation */}
+        {photos.length > photosPerView && (
+          <div className="flex items-center justify-between mt-6 sm:mt-8 px-2 sm:px-0 gap-2 sm:gap-4">
+            <motion.button
+              onClick={prevPhotos}
+              disabled={currentIndex === 0}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 sm:p-3 rounded-full border border-[#1A1A1A] bg-black hover:border-red-400/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-300"
+            >
+              <svg
+                className="w-5 h-5 text-slate-400 hover:text-red-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </motion.button>
+
+            {/* Counter */}
+            <div className="text-center text-xs sm:text-sm text-slate-400 flex-shrink-0">
+              <span className="text-red-400 font-semibold">{currentIndex + 1}</span>
+              <span className="opacity-60"> - </span>
+              <span className="text-red-400 font-semibold">{Math.min(currentIndex + photosPerView, photos.length)}</span>
+              <span className="opacity-60"> / {photos.length}</span>
+            </div>
+
+            <motion.button
+              onClick={nextPhotos}
+              disabled={!hasMore}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 sm:p-3 rounded-full border border-[#1A1A1A] bg-black hover:border-red-400/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-300"
+            >
+              <svg
+                className="w-5 h-5 text-slate-400 hover:text-red-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </motion.button>
+          </div>
+        )}
       </div>
 
       {/* Lightbox modal */}
