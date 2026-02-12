@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Background images array for CTA section
@@ -26,7 +26,7 @@ export const EarlyAccessCTA = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Rotate images on mount
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % BACKGROUND_IMAGES.length);
     }, 6000);
