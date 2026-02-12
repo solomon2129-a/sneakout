@@ -233,7 +233,7 @@ export const Hero = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="space-y-6"
+            className="space-y-2 sm:space-y-3 md:space-y-4"
           >
             {/* Main headline - image instead of text */}
             <motion.div variants={itemVariants}>
@@ -283,19 +283,6 @@ export const Hero = () => {
               </motion.a>
             </motion.div>
           </motion.div>
-        </motion.div>
-
-        {/* Image counter */}
-        <motion.div
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-30 text-slate-400 text-xs sm:text-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <div className="cursor-pointer">
-            <span className="font-semibold text-red-400">{currentImageIndex + 1}</span>
-            <span className="opacity-60"> / {BACKGROUND_IMAGES.length}</span>
-          </div>
         </motion.div>
 
         {/* Scroll indicator */}

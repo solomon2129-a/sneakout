@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import * as React from "react";
-import Image from "next/image";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const MotionDiv: any = motion.div;
 
@@ -19,84 +18,114 @@ const photos = [
 ];
 
 export const AnimatedPhotoGrid = () => {
-  const [pageIndex, setPageIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // chunk photos into pages of 4
-  const pageSize = 4;
-  const pages: string[][] = [];
-  for (let i = 0; i < photos.length; i += pageSize) {
-    pages.push(photos.slice(i, i + pageSize));
-  }
-
+  // Auto-rotate through photos
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPageIndex((p) => (p + 1) % pages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [pages.length]);
+    const timer = setInterval(() => {
+      setSelectedIndex((prev) => (prev + 1) % photos.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-auto">
-      {/* Paged carousel container */}
-      <div className="absolute inset-0">
-        <MotionDiv
-          className="flex w-full h-full"
-          animate={{ x: `-${pageIndex * 100}%` }}
-          transition={{ type: "spring", stiffness: 120, damping: 18 }}
-          style={{ width: `${pages.length * 100}%` }}
-        >
-          {pages.map((page, pi) => (
-            <div key={pi} className="w-full h-full flex-shrink-0 p-8">
-              <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-4">
-                {page.map((src, i) => (
-                  <div key={i} className="relative w-full h-full rounded-lg overflow-hidden">
-                    <MotionDiv
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.8, ease: "easeInOut", delay: i * 0.06 }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={src}
-                        alt={`bg-${pi}-${i}`}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-700"
-                        quality={75}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/20 pointer-events-none" />
-                    </MotionDiv>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </MotionDiv>
+      {/* Main carousel container */}
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8">
+        <div className="relative w-full h-full max-w-4xl max-h-[600px] rounded-xl overflow-hidden shadow-2xl">
+          {/* Carousel images */}
+          <div className="relative w-full h-full">
+            {photos.map((src, i) => (
+              <MotionDiv
+                key={i}
+                className="absolute inset-0"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{
+                  opacity: i === selectedIndex ? 1 : 0,
+                  scale: i === selectedIndex ? 1 : 0.95,
+                  zIndex: i === selectedIndex ? 10 : 0,
+                }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              >
+                <Image
+                  src={src}
+                  alt={`Real moment ${i + 1}`}
+                  fill
+                  className="object-cover"
+                  quality={85}
+                  priority={i === selectedIndex}
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              </MotionDiv>
+            ))}
+          </div>
+
+          {/* Navigation dots */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2 sm:gap-3">
+            {photos.map((_, i) => (
+              <MotionDiv
+                key={i}
+                onClick={() => setSelectedIndex(i)}
+                className="cursor-pointer"
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <button
+                  className={`rounded-full transition-all ${
+                    i === selectedIndex
+                      ? "bg-red-500 w-3 h-3 sm:w-4 sm:h-4"
+                      : "bg-white/40 hover:bg-white/60 w-2 h-2 sm:w-3 sm:h-3"
+                  }`}
+                  aria-label={`Go to photo ${i + 1}`}
+                />
+              </MotionDiv>
+            ))}
+          </div>
+
+          {/* Arrow navigation */}
+          <button
+            onClick={() => setSelectedIndex((prev) => (prev - 1 + photos.length) % photos.length)}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-red-600 text-white p-2 sm:p-3 rounded-full transition-all"
+            aria-label="Previous photo"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            onClick={() => setSelectedIndex((prev) => (prev + 1) % photos.length)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-red-600 text-white p-2 sm:p-3 rounded-full transition-all"
+            aria-label="Next photo"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Photo counter */}
+          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 text-white text-xs sm:text-sm font-semibold bg-black/50 px-3 sm:px-4 py-1 sm:py-2 rounded-full">
+            {selectedIndex + 1} / {photos.length}
+          </div>
+        </div>
       </div>
 
-      {/* Animated vignette effect (non interactive) */}
-      <div className="absolute inset-0 pointer-events-none">
-        <MotionDiv
-          animate={{ opacity: [0.12, 0.22, 0.12] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-gradient-to-r from-black/12 via-transparent to-black/12"
-        />
-      </div>
+      {/* Animated background bloom */}
+      <MotionDiv
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: [
+            "radial-gradient(ellipse at 30% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 70% 30%, rgba(220, 38, 38, 0.15) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 50% 70%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)",
+          ],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      {/* Scanlines effect for cinematic feel (subtle) */}
-      <div className="absolute inset-0 pointer-events-none opacity-10">
-        <div
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 4px)",
-            backgroundSize: "100% 4px",
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </div>
-
-      {/* Reduced dark overlay for content readability to avoid black flashes */}
-      <div className="absolute inset-0 bg-black/12 pointer-events-none" />
+      {/* Dark vignette */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-black/40" />
     </div>
   );
 };
