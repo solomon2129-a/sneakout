@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { shuffleArray } from "@/lib/shufflePhotos";
 
 export const ProofSection = () => {
   const stats = [
@@ -116,7 +117,7 @@ export const ProofSection = () => {
 };
 
 const PhotoGrid = () => {
-  const photos = [
+  const PHOTOS_POOL = [
     "/photos/IMG_3181.JPG",
     "/photos/IMG_3182.JPG",
     "/photos/IMG_3183.JPG",
@@ -148,6 +149,12 @@ const PhotoGrid = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [photosPerView, setPhotosPerView] = useState(3);
+  const [photos, setPhotos] = useState<string[]>([]);
+
+  // Shuffle photos on mount
+  useEffect(() => {
+    setPhotos(shuffleArray(PHOTOS_POOL));
+  }, []);
 
   // Handle responsive layout after mount
   useEffect(() => {
@@ -160,7 +167,7 @@ const PhotoGrid = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const visiblePhotos = photos.slice(currentIndex, currentIndex + photosPerView);
+  const visiblePhotos = photos.length > 0 ? photos.slice(currentIndex, currentIndex + photosPerView) : [];
   const hasMore = currentIndex + photosPerView < photos.length;
 
   const nextPhotos = () => {

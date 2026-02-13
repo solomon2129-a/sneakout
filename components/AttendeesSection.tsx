@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useRef } from "react";
+import { shuffleArray } from "@/lib/shufflePhotos";
 
 export const AttendeesSection = () => {
   const sectionRef = useRef(null);
@@ -13,8 +14,9 @@ export const AttendeesSection = () => {
   const imageScale = useTransform(scrollY, [0, 1000], [1, 1.1]);
   
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [photos, setPhotos] = useState<string[]>([]);
 
-  const photos = [
+  const PHOTOS_POOL = [
     "/photos/IMG_3182.JPG",
     "/photos/IMG_3183.JPG",
     "/photos/IMG_3184.JPG",
@@ -30,11 +32,17 @@ export const AttendeesSection = () => {
   ];
 
   useEffect(() => {
+    // Shuffle photos on mount
+    setPhotos(shuffleArray(PHOTOS_POOL));
+  }, []);
+
+  useEffect(() => {
+    if (photos.length === 0) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % photos.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [photos.length]);
 
   const benefits = [
     { text: "Discover verified shows in your city", icon: "ticket" },

@@ -3,9 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { shuffleArray } from "@/lib/shufflePhotos";
 
 // Background images from local photos folder
-const BACKGROUND_IMAGES = [
+const BACKGROUND_IMAGES_POOL = [
   "/photos/IMG_3181.JPG",
   "/photos/IMG_3182.JPG",
   "/photos/IMG_3183.JPG",
@@ -40,6 +41,7 @@ export const Hero = () => {
   const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -47,6 +49,9 @@ export const Hero = () => {
 
   // Check for reduced motion preference first (before effects)
   useEffect(() => {
+    // Shuffle images on mount
+    setBackgroundImages(shuffleArray(BACKGROUND_IMAGES_POOL));
+    
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
 
@@ -77,7 +82,8 @@ export const Hero = () => {
 
   // Preload images
   useEffect(() => {
-    BACKGROUND_IMAGES.forEach((src) => {
+    if (backgroundImages.length === 0) return;
+    backgroundImages.forEach((src) => {
       const img = new Image();
       img.src = src;
     });
@@ -85,14 +91,14 @@ export const Hero = () => {
 
   // Rotate background images
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || backgroundImages.length === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % BACKGROUND_IMAGES.length);
+      setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
     }, ROTATION_INTERVAL);
 
     return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, backgroundImages.length]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -166,7 +172,7 @@ export const Hero = () => {
             <motion.div
               className="absolute inset-0 bg-cover bg-center"
               style={{
-                backgroundImage: `url('${BACKGROUND_IMAGES[currentImageIndex]}')`,
+                backgroundImage: `url('${backgroundImages[currentImageIndex]}')`,
                 filter: "brightness(0.65) contrast(1.1) saturate(0.9)",
               }}
               variants={kenBurnsVariants}

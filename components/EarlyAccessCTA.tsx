@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { shuffleArray } from "@/lib/shufflePhotos";
 
 // Background images array for CTA section
-const BACKGROUND_IMAGES = [
+const BACKGROUND_IMAGES_POOL = [
   "/photos/IMG_3195.JPG",
   "/photos/IMG_3197.JPG",
   "/photos/IMG_3198.JPG",
@@ -29,13 +30,11 @@ export const EarlyAccessCTA = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
 
-  // Rotate images on mount
+  // Shuffle images on mount
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % BACKGROUND_IMAGES.length);
-    }, 6000);
-    return () => clearInterval(interval);
+    setBackgroundImages(shuffleArray(BACKGROUND_IMAGES_POOL));
   }, []);
 
   const handleChange = (
@@ -78,7 +77,7 @@ export const EarlyAccessCTA = () => {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `url('${BACKGROUND_IMAGES[currentImageIndex]}')`,
+              backgroundImage: `url('${backgroundImages[currentImageIndex]}')`,
               filter: "brightness(0.4) contrast(1.1) saturate(0.85) blur(3px)",
             }}
           />

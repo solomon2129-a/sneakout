@@ -3,10 +3,11 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { shuffleArray } from "@/lib/shufflePhotos";
 
 const MotionDiv: any = motion.div;
 
-const photos = [
+const PHOTOS_POOL = [
   "/photos/IMG_3181.JPG",
   "/photos/IMG_3182.JPG",
   "/photos/IMG_3183.JPG",
@@ -37,14 +38,21 @@ const photos = [
 
 export const AnimatedPhotoGrid = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [photos, setPhotos] = useState<string[]>([]);
+
+  // Shuffle photos on mount
+  useEffect(() => {
+    setPhotos(shuffleArray(PHOTOS_POOL));
+  }, []);
 
   // Auto-rotate through photos
   useEffect(() => {
+    if (photos.length === 0) return;
     const timer = setInterval(() => {
       setSelectedIndex((prev) => (prev + 1) % photos.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [photos.length]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-auto">

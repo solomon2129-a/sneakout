@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { DraggableCardContainer, DraggableCardBody } from "@/components/ui/draggable-card";
+import { shuffleArray } from "@/lib/shufflePhotos";
 
-const items = [
+const ITEMS_POOL = [
   {
     title: "Underground Energy",
     image: "/photos/IMG_3181.JPG",
@@ -22,6 +24,13 @@ const items = [
 ];
 
 export const CultureShowcase = () => {
+  const [items, setItems] = useState<typeof ITEMS_POOL>([]);
+
+  useEffect(() => {
+    // Shuffle items on mount
+    setItems(shuffleArray(ITEMS_POOL));
+  }, []);
+
   return (
     <section className="py-20 px-4 bg-[#1A1A1A]">
       <div className="max-w-6xl mx-auto">
