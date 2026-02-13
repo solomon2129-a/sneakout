@@ -15,14 +15,18 @@ export const AttendeesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const photos = [
+    "/photos/IMG_3182.JPG",
+    "/photos/IMG_3183.JPG",
+    "/photos/IMG_3184.JPG",
+    "/photos/IMG_3185.JPG",
+    "/photos/IMG_3186.JPG",
+    "/photos/IMG_3187.JPG",
+    "/photos/IMG_3188.JPG",
+    "/photos/IMG_3191.JPG",
+    "/photos/IMG_3192.JPG",
+    "/photos/IMG_3193.JPG",
+    "/photos/IMG_3194.JPG",
     "/photos/1d1210673d4cb650dba75676a4182d32.jpg",
-    "/photos/1d2dcb1400a01be837ba7962dc9722df.jpg",
-    "/photos/500b54a46528c03179fad5eec6b3b4be.jpg",
-    "/photos/75d02f86fd6ea6bf2eed64a13521af4f.jpg",
-    "/photos/93d33b221e817388a04e6e1834d23cd7.jpg",
-    "/photos/99031f2120735a3ed3062c1881698483.jpg",
-    "/photos/e50a13dac41cc3452647a5ae57b4701d.png",
-    "/photos/ea0866c3d52e9c38cbd600fa1c18a2d1.jpg",
   ];
 
   useEffect(() => {

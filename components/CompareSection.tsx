@@ -35,8 +35,8 @@ export const CompareSection = () => {
             <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none rounded-lg" />
             
             <Compare
-              firstImage="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&h=500&fit=crop&auto=format"
-              secondImage="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=600&h=500&fit=crop&auto=format"
+              firstImage="/photos/IMG_3183.JPG"
+              secondImage="/photos/IMG_3184.JPG"
               firstImageClassName="object-cover object-center brightness-75"
               secondImageClassname="object-cover object-center brightness-85"
               className="h-[300px] md:h-[500px]"

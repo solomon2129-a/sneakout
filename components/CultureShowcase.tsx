@@ -6,17 +6,17 @@ import { DraggableCardContainer, DraggableCardBody } from "@/components/ui/dragg
 const items = [
   {
     title: "Underground Energy",
-    image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&h=320&fit=crop",
+    image: "/photos/IMG_3181.JPG",
     className: "absolute top-10 left-[20%] rotate-[-5deg]",
   },
   {
     title: "Crowd Connection",
-    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=320&fit=crop",
+    image: "/photos/IMG_3189.JPG",
     className: "absolute top-40 left-[25%] rotate-[-7deg]",
   },
   {
     title: "Late Night Culture",
-    image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=400&h=320&fit=crop",
+    image: "/photos/IMG_3190.JPG",
     className: "absolute top-5 left-[40%] rotate-[8deg]",
   },
 ];
