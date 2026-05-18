@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sneakout – The OS for Underground Events</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #0F0F0F;
+      color: #F5F5F5;
+      line-height: 1.6;
+    }
+    
+    /* Utility Classes */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+    .text-center { text-align: center; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .grid-2-mobile { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    @media (min-width: 768px) { .grid-2-mobile { grid-template-columns: repeat(2, 1fr); } }
+    
+    /* Buttons */
+    .btn { 
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-primary { background: #14B8A6; color: #0F0F0F; }
+    .btn-primary:hover { background: #0d9488; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(20, 184, 166, 0.25); }
+    .btn-secondary { background: transparent; color: #F5F5F5; border: 1.5px solid #14B8A6; }
+    .btn-secondary:hover { background: #14B8A6; color: #0F0F0F; }
+    
+    /* Cards */
+    .card {
+      background: rgba(31, 31, 31, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(245, 245, 245, 0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 48px rgba(20, 184, 166, 0.15); border-color: rgba(20, 184, 166, 0.3); }
+    
+    /* Inputs */
+    input, textarea, select {
+      background: rgba(31, 31, 31, 0.8);
+      border: 1px solid rgba(245, 245, 245, 0.1);
+      color: #F5F5F5;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(245, 245, 245, 0.5); }
+    input:focus, textarea:focus, select:focus { 
+      outline: none;
+      border-color: #14B8A6;
+      box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+    }
+    
+    /* Sections */
+    section { padding: 5rem 0; }
+    h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+    h2 { font-size: clamp(1.875rem, 5vw, 3rem); font-weight: 700; margin-bottom: 1rem; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
+    
+    .hero {
+      background: linear-gradient(135deg, #0F0F0F 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 10; text-align: center; max-width: 56rem; }
+    .hero-badge { color: #14B8A6; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; display: block; }
+    .hero-buttons { display: flex; flex-direction: column; gap: 1rem; justify-content: center; align-items: center; margin-top: 2rem; flex-wrap: wrap; }
+    @media (min-width: 640px) { .hero-buttons { flex-direction: row; } }
+    
+    .problem { background: linear-gradient(to bottom, rgb(17, 24, 39), rgb(3, 7, 18)); }
+    .solution { background: #0F0F0F; }
+    .proof { background: rgb(17, 24, 39); }
+    .who { background: #0F0F0F; }
+    .how { background: rgb(17, 24, 39); }
+    .cta { background: #0F0F0F; }
+    .footer { background: #0F0F0F; border-top: 1px solid rgb(31, 41, 55); padding: 3rem 0; }
+    
+    .section-subtitle { color: #9CA3AF; font-size: 1.125rem; max-width: 42rem; margin: 1rem auto 4rem; }
+    .text-gray { color: #9CA3AF; }
+    .text-muted { color: #6B7280; }
+    
+    .problem-item { display: flex; gap: 1rem; }
+    .problem-item-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .problem-item-content h3 { color: #F5F5F5; }
+    
+    .benefit-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: linear-gradient(to bottom right, rgb(20, 184, 166), rgb(34, 197, 194));
+      color: #0F0F0F;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .stat-box { text-align: center; }
+    .stat-value { font-size: 2rem; font-weight: 700; color: #14B8A6; margin-bottom: 0.5rem; }
+    
+    .quote { font-style: italic; color: #D1D5DB; margin-bottom: 1rem; }
+    .quote-author { font-size: 0.875rem; color: #6B7280; }
+    
+    .image-wrapper { position: relative; overflow: hidden; border-radius: 8px; height: 16rem; margin-bottom: 1.5rem; }
+    .image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .image-wrapper:hover img { transform: scale(1.1); }
+    .image-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, transparent, #0F0F0F); }
+    
+    .step-connector { 
+      display: none;
+      position: absolute;
+      top: 4rem;
+      left: 25%;
+      right: 25%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgb(20, 184, 166), transparent);
+    }
+    @media (min-width: 768px) { .step-connector { display: block; } }
+    
+    .step-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #14B8A6;
+      opacity: 0.3;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    @media (min-width: 640px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
+    .form-full { grid-column: 1 / -1; }
+    
+    .success-state {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .success-checkmark { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeInUp 0.6s ease forwards; }
+    .delay-1 { animation-delay: 100ms; }
+    .delay-2 { animation-delay: 200ms; }
+    .delay-3 { animation-delay: 300ms; }
+    .delay-4 { animation-delay: 400ms; }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * { animation: slideIn 0.8s ease forwards; }
+    .hero-content > :nth-child(2) { animation-delay: 100ms; }
+    .hero-content > :nth-child(3) { animation-delay: 200ms; }
+    .hero-content > :nth-child(4) { animation-delay: 300ms; }
+    .hero-content > :nth-child(5) { animation-delay: 400ms; }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge fade-in">Coming to Bangalore</span>
+      <h1 class="fade-in delay-1">Run events that don't fall apart</h1>
+      <p class="section-subtitle fade-in delay-2">The operating system for underground event organizers. Manage everything from first idea to last attendee — without the chaos.</p>
+      <div class="hero-buttons fade-in delay-3">
+        <button class="btn btn-primary">Request Early Access</button>
+        <button class="btn btn-secondary">See How It Works ↓</button>
+      </div>
+      <p class="text-muted fade-in delay-4" style="margin-top: 2rem; font-size: 0.875rem;">Used by underground organizers in Bangalore, Mumbai & Delhi</p>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="problem">
+    <div class="container">
+      <h2 class="text-center">Events are hard. They shouldn't be impossible.</h2>
+      <p class="section-subtitle">Every organizer faces the same problems. Sneakout solves them.</p>
+      <div class="grid-2">
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">📱</div>
+          <h3>Scattered Conversations</h3>
+          <p class="text-gray">Managing vendors across WhatsApp groups, Instagram DMs, and forgotten email threads.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">⚡</div>
+          <h3>Last-Minute Chaos</h3>
+          <p class="text-gray">Confirming vendors 2 hours before doors open because nothing's in writing.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">🚫</div>
+          <h3>Zero Trust</h3>
+          <p class="text-gray">Working with new providers feels like a gamble. Will they show up? Will they deliver?</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">🎫</div>
+          <h3>Ticketing Nightmares</h3>
+          <p class="text-gray">Tracking RSVPs across 5 platforms while manually checking people in at the door.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section class="solution">
+    <div class="container">
+      <h2 class="text-center">One tool. Less chaos. Better events.</h2>
+      <p class="section-subtitle">Sneakout brings order to the beautiful chaos of event organizing.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="benefit-number">1</div>
+          <h3>Plan with Structure</h3>
+          <p class="text-gray">Turn ideas into action. Set timelines, track tasks, and stay organized from concept to execution.</p>
+        </div>
+        <div class="card">
+          <div class="benefit-number">2</div>
+          <h3>Execute with Confidence</h3>
+          <p class="text-gray">Everything you need to run the event — confirmations, logistics, and real-time coordination.</p>
+        </div>
+        <div class="card">
+          <div class="benefit-number">3</div>
+          <h3>Build Your Reputation</h3>
+          <p class="text-gray">Every successful event builds your credibility. Show the scene you're reliable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof -->
+  <section class="proof">
+    <div class="container">
+      <h2 class="text-center">Tested in the real world</h2>
+      <div class="grid-3" style="margin-top: 3rem;">
+        <div class="card stat-box">
+          <div class="stat-value">6</div>
+          <p class="text-gray">Live events executed</p>
+        </div>
+        <div class="card stat-box">
+          <div class="stat-value">₹4.2L</div>
+          <p class="text-gray">Event coordination managed</p>
+        </div>
+        <div class="card stat-box">
+          <div class="stat-value">200+</div>
+          <p class="text-gray">Attendees coordinated</p>
+        </div>
+      </div>
+      <div class="grid-2-mobile" style="margin-top: 3rem; border-top: 1px solid rgb(55, 65, 81); padding-top: 2rem;">
+        <div class="card">
+          <p class="quote">"Finally, something built for people who actually throw events — not corporate planners."</p>
+          <p class="quote-author">— Festival Organizer, Bangalore</p>
+        </div>
+        <div class="card">
+          <p class="quote">"It just works. No bullshit, no complications."</p>
+          <p class="quote-author">— Music Curator, Mumbai</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who It's For -->
+  <section class="who">
+    <div class="container">
+      <h2 class="text-center">Built for underground culture</h2>
+      <p class="section-subtitle">We get the scene. We know what you need.</p>
+      <div class="grid-3">
+        <div>
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=400&fit=crop" alt="DIY Concert">
+            <div class="image-overlay"></div>
+          </div>
+          <h3>DIY Organizers</h3>
+          <p class="text-gray">Throwing indie concerts, art shows, or underground raves without corporate backing.</p>
+        </div>
+        <div>
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=400&fit=crop" alt="Art Gallery">
+            <div class="image-overlay"></div>
+          </div>
+          <h3>Cultural Curators</h3>
+          <p class="text-gray">Building scenes — from poetry nights to techno showcases — that don't fit the mainstream.</p>
+        </div>
+        <div>
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500&h=400&fit=crop" alt="Festival">
+            <div class="image-overlay"></div>
+          </div>
+          <h3>Festival Producers</h3>
+          <p class="text-gray">Coordinating multi-day experiences with dozens of moving parts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how">
+    <div class="container">
+      <h2 class="text-center">Simple to start. Powerful to scale.</h2>
+      <p class="section-subtitle">Three steps. Complete control.</p>
+      <div class="grid-3" style="position: relative;">
+        <div class="step-connector"></div>
+        <div class="card">
+          <div class="step-number">01</div>
+          <h3>Create Your Event</h3>
+          <p class="text-gray">Set the vision. Add details. Build your plan.</p>
+        </div>
+        <div class="card">
+          <div class="step-number">02</div>
+          <h3>Coordinate Everything</h3>
+          <p class="text-gray">Manage logistics, confirmations, and execution in one place.</p>
+        </div>
+        <div class="card">
+          <div class="step-number">03</div>
+          <h3>Run the Event</h3>
+          <p class="text-gray">Show up confident. Everything's handled.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Early Access CTA -->
+  <section class="cta">
+    <div class="container" style="max-width: 42rem;">
+      <h2 class="text-center">Be part of the first wave</h2>
+      <p class="section-subtitle">Sneakout launches in Bangalore in 3 months. Request early access and help us build the tool you've always needed.</p>
+      <div class="card" style="margin-top: 2rem;">
+        <form id="earlyAccessForm" style="display: none;">
+          <div class="form-grid">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Email address" required>
+            <select name="eventType">
+              <option value="">Event type</option>
+              <option value="music">Music</option>
+              <option value="art">Art</option>
+              <option value="festival">Festival</option>
+              <option value="other">Other</option>
+            </select>
+            <input type="text" name="instagram" placeholder="Instagram handle (optional)">
+            <textarea name="eventDesc" class="form-full" placeholder="Tell us about your next event (optional)" rows="4"></textarea>
+            <button type="submit" class="btn btn-primary form-full">Request Early Access</button>
+          </div>
+        </form>
+        <div id="successMessage" class="success-state">
+          <span class="success-checkmark">✓</span>
+          <h3>Thanks for joining</h3>
+          <p class="text-gray">We'll reach out as soon as early access opens.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p class="text-gray">© 2026 Sneakout. Event infrastructure built for underground culture.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 2rem; justify-content: center; font-size: 0.875rem;">
+        <a href="#" style="color: #9CA3AF; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#14B8A6'" onmouseout="this.style.color='#9CA3AF'">Twitter</a>
+        <a href="#" style="color: #9CA3AF; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#14B8A6'" onmouseout="this.style.color='#9CA3AF'">Instagram</a>
+        <a href="#" style="color: #9CA3AF; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#14B8A6'" onmouseout="this.style.color='#9CA3AF'">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  <script>
+    // Scroll reveal animations
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+
+    // Form handling
+    const form = document.getElementById('earlyAccessForm');
+    const successMessage = document.getElementById('successMessage');
+    
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        eventType: formData.get('eventType'),
+        instagram: formData.get('instagram'),
+        eventDesc: formData.get('eventDesc'),
+      };
+      localStorage.setItem('sneakoutEarlyAccess', JSON.stringify(data));
+      form.style.display = 'none';
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        form.style.display = 'block';
+        successMessage.style.display = 'none';
+        form.reset();
+      }, 5000);
+    });
+
+    // Show form by default
+    form.style.display = 'block';
+    successMessage.style.display = 'none';
+
+    // Smooth scroll for "See How It Works" button
+    document.querySelectorAll('a[href="#how"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('.how').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
